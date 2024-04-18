@@ -54,7 +54,59 @@ Just for reference, here are the required AT commands to interact with the eUICC
 - `AT+CCHC` to close logical channel 
 - `AT+CGLA` to use logical channel access
 
-## Bugs & know issues
+# Bugs & know issues
 
-Delete profile doesn't seem to contact SM-DS server, so it **doesn't release** the eSIM profile. I'm tryting to understandy why.
+Delete profile doesn't contact SM-DS server automatically, so it **doesn't release** the eSIM profile. 
+You should issue these commands to release the profile: 
+
+Run this command to get all tasks issued on the eUICC
+
+`./wrapper notification list`
+
+Output:
+
+```
+{'payload': {'code': 0,
+             'data': [{'iccid': '8931XXXXXXXXXXXXXXX',
+                       'notificationAddress': 'dp-plus-par07-01.oasis-smartsim.com',
+                       'profileManagementOperation': 'install',
+                       'seqNumber': 6},
+                      {'iccid': '8939XXXXXXXXXXXXXXX',
+                       'notificationAddress': 'frm.prod.ondemandconnectivity.com',
+                       'profileManagementOperation': 'disable',
+                       'seqNumber': 2},
+                      {'iccid': '8939XXXXXXXXXXXXXXX',
+                       'notificationAddress': 'frm.prod.ondemandconnectivity.com',
+                       'profileManagementOperation': 'enable',
+                       'seqNumber': 3},
+                      {'iccid': '8939XXXXXXXXXXXXXXX',
+                       'notificationAddress': 'frm.prod.ondemandconnectivity.com',
+                       'profileManagementOperation': 'disable',
+                       'seqNumber': 4},
+                      {'iccid': '8939XXXXXXXXXXXXXXX',
+                       'notificationAddress': 'frm.prod.ondemandconnectivity.com',
+                       'profileManagementOperation': 'delete',
+                       'seqNumber': 5},
+                      {'iccid': '8931XXXXXXXXXXXXXXX',
+                       'notificationAddress': 'dp-plus-par07-01.oasis-smartsim.com',
+                       'profileManagementOperation': 'enable',
+                       'seqNumber': 7},
+                      {'iccid': '8931XXXXXXXXXXXXXXX',
+                       'notificationAddress': 'dp-plus-par07-01.oasis-smartsim.com',
+                       'profileManagementOperation': 'disable',
+                       'seqNumber': 8},
+                      {'iccid': '8931XXXXXXXXXXXXXXX',
+                       'notificationAddress': 'dp-plus-par07-01.oasis-smartsim.com',
+                       'profileManagementOperation': 'delete',
+                       'seqNumber': 9}],
+             'message': 'success'},
+ 'type': 'lpa'}
+```
+
+Look at the `delete` notification and relative `seqNumber`, then issue the notification to the remote server to release the profile using this command:
+
+`./wrapper notification process -r 5` <-- this will tell remote SM-DS server to release eUICC profile.
+
+# Others
+
 I'm not a Python expert, so it's possible that there are some bugs present. Feel free to file an issue and/or submit a pull request to enhance the code :)
