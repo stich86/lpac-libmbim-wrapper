@@ -1,0 +1,152 @@
+#!/usr/bin/python3
+
+import os
+import json
+import subprocess
+import sys
+from pprint import pprint
+from typing import Optional
+
+DEBUG = False
+
+# apdu request doesn't provide us the channel_id again, so we need to persist it
+CHANNEL_ID: Optional[int] = None
+
+def run_mbimcli(command: str) -> str:
+    try:
+        command = command.replace('"', '')
+        output_bytes = subprocess.check_output(["mbimcli", "-p", "-d", "/dev/wwan0mbim0"] + command.split(),
+                                                stderr=subprocess.STDOUT,
+                                                timeout=10)
+        output_str = output_bytes.decode("utf-8")
+        return output_str.strip()
+    except subprocess.CalledProcessError as e:
+        print("Error executing command:", e.output.decode("utf-8"))
+        return None
+
+def send_apdu(apdu: str) -> str:
+    output_cmd = run_mbimcli(f'--ms-set-uicc-apdu="channel={CHANNEL_ID},command={apdu}"').split('\n')
+    status = int(output_cmd[1].split(': ')[1])
+    status_hex = hex(status)[2:].zfill(4).upper()
+    status_hex = "".join([status_hex[i:i + 2] for i in range(0, len(status_hex), 2)][::-1])
+    response = output_cmd[2].split(': ')[1].replace(':', '')
+    if response.strip() != "(null)":
+        return f'{response}{status_hex}'
+    else:
+        return f'{status_hex}'
+
+def open_channel(aid: str) -> str:
+    output_cmd = run_mbimcli(f'--ms-set-uicc-open-channel="application-id={aid}"').split('\n')
+    channel_line = next(line for line in output_cmd if line.startswith('\t channel:'))
+    channel_id_str = channel_line.split(': ')[1].strip()
+    channel_id = int(channel_id_str)
+    return channel_id
+
+def close_channel(channel_id: int) -> None:
+    run_mbimcli(f'--ms-set-uicc-close-channel="channel={channel_id}"')
+
+
+def handle_type_apdu(func: str, param: str):
+    if func == "connect":
+        # Nothing to do
+        print("INFO: Connect")
+        return {"ecode": 0}
+
+    if func == "disconnect":
+        # Nothing to do
+        print("INFO: Disconnect")
+        return {"ecode": 0}
+
+    if func == "logic_channel_open":
+        print(f"INFO: Open channel with AID {param}")
+        try:
+            channel_id = open_channel(param)
+            # We need to persist the channel ID for send_apdu
+            global CHANNEL_ID
+            CHANNEL_ID = channel_id
+            return {"ecode": 1}
+        except subprocess.CalledProcessError as e:
+            print(e)
+            return {"ecode": "-1"}
+
+    if func == "logic_channel_close":
+        try:
+            print(f"INFO: Close channel {param}")
+            close_channel(int(param))
+            return {"ecode": 0}
+        except subprocess.CalledProcessError as e:
+            print(e)
+            return {"ecode": "-1"}
+
+    if func == "transmit":
+        try:
+            if DEBUG:
+                print(f"Send APDU: {param}")
+            data = send_apdu(param)
+            if DEBUG:
+                print(f"Recv APDU: {data}")
+            return {"ecode": 0, "data": data}
+        except subprocess.CalledProcessError as e:
+            return {"ecode": "-1"}
+
+    raise RuntimeError(f"Unhandled func {func}")
+
+
+def main():
+    if os.environ.get("DEBUG") == "1":
+        global DEBUG
+        DEBUG = 1
+
+    env = os.environ.copy()
+    env["APDU_INTERFACE"] = "libapduinterface_stdio.so"
+    env["LPAC_APDU"] = "stdio"
+
+    cmd = ['/home/lynx/Downloads/wrapper/lpac'] + sys.argv[1:]
+    with subprocess.Popen(cmd,
+                          stdout=subprocess.PIPE,
+                          stdin=subprocess.PIPE,
+                          stderr=subprocess.DEVNULL,
+                          env=env,
+                          text=True) as proc:
+        while proc.poll() is None:
+            # Read a line from lpac
+            line = proc.stdout.readline().strip()
+            if DEBUG:
+                print(f"recv={line}")
+            if not line:
+                continue
+            try:
+                req = json.loads(line)
+            except json.decoder.JSONDecodeError:
+                print("Failed to decode JSON:")
+                print(line)
+                continue
+
+            req_type = req["type"]
+            if req_type == "lpa":
+                print("INFO: Received LPA data. Printing...")
+                pprint(req)
+                continue
+
+            if req_type == "progress":
+                print("INFO: Received progress. Printing...")
+                pprint(req)
+                continue
+
+            if req_type == "apdu":
+                payload = handle_type_apdu(req["payload"]["func"], req["payload"]["param"])
+                resp = {"type": "apdu", "payload": payload}
+                # Send a line to lpac
+                if DEBUG:
+                    print(f"send={json.dumps(resp)}")
+                proc.stdin.write(json.dumps(resp) + "\n")
+                proc.stdin.flush()
+                continue
+
+            raise RuntimeError(f"Unknown request type {req_type}")
+
+        print(f"Exit code: {proc.returncode}")
+
+
+if __name__ == '__main__':
+    main()
