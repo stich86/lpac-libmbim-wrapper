@@ -101,7 +101,7 @@ def main():
     env["APDU_INTERFACE"] = "libapduinterface_stdio.so"
     env["LPAC_APDU"] = "stdio"
 
-    cmd = ['/home/lynx/Downloads/wrapper/lpac'] + sys.argv[1:]
+    cmd = ['lpac'] + sys.argv[1:]
     with subprocess.Popen(cmd,
                           stdout=subprocess.PIPE,
                           stdin=subprocess.PIPE,
