@@ -57,13 +57,13 @@ Just for reference, here are the required AT commands to interact with the eUICC
 # Bugs & know issues
 
 Delete profile doesn't contact SM-DS server automatically, so it **doesn't release** the eSIM profile. 
-You should issue these commands to release the profile: 
+You should run these commands to release it: 
 
-Run this command to get all tasks issued on the eUICC
+Get all tasks issued on the eUICC:
 
 `./wrapper notification list`
 
-Output:
+Example output:
 
 ```
 {'payload': {'code': 0,
@@ -103,9 +103,10 @@ Output:
  'type': 'lpa'}
 ```
 
-Look at the `delete` notification and relative `seqNumber`, then issue the notification to the remote server to release the profile using this command:
+Look at **profileManagementOperation** type `delete` and take not of `seqNumber` value, then issue the notification command to release the eSIM profile:
 
-`./wrapper notification process -r 5` <-- this will tell remote SM-DS server to release eUICC profile.
+`./wrapper notification process -r 5` <-- this will tell remote SM-DS server to release eSIM profile for ICCID `8939XXXXXXXXXXXXXXX`.
+`./wrapper notification process -r 9` <-- this will tell remote SM-DS server to release eSIM profile for ICCID `8931XXXXXXXXXXXXXXX`.
 
 # Others
 
