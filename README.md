@@ -56,4 +56,5 @@ Just for reference, here are the required AT commands to interact with the eUICC
 
 ## Bugs & know issues
 
+Delete profile doesn't seem to contact SM-DS server, so it **doesn't release** the eSIM profile. I'm tryting to understandy why.
 I'm not a Python expert, so it's possible that there are some bugs present. Feel free to file an issue and/or submit a pull request to enhance the code :)
