@@ -38,15 +38,6 @@ Exit code: 0
 
 All other commands are similar to LPAC. Just use wrapper instead of lpac as the first argument. Make sure to have access to the MBIM port, otherwise, run it as root.
 
-It has been tested on a *Foxconn T99W175* module in a *Lenovo ThinkPad X1C-G9*. Make sure to have selected the correct slot (slot 0=Physical SIM, slot 1=eSIM).
-You can swap slot with `mbimcli` using this command:
-
-`mbimcli -p -d /dev/wwan0mbim0 --ms-set-device-slot-mappings=1`
-
-If you want to know which slot is active, just type:
-
-`mbimcli -p -d /dev/wwan0mbim0 --ms-query-device-slot-mappings`
-
 # Test List
 
 Here is a list of tests that I've done, both with embedded and [physical](https://www.lenovo.com/it/it/p/accessories-and-software/mobile-broadband/4g-lte/4xc1l91362) eSIM:
@@ -57,11 +48,22 @@ Here is a list of tests that I've done, both with embedded and [physical](https:
 | Quectel RM502Q-GL (MBIM)         | TBT           | N/A (no embedded eSIM) |
 | Quectel RM502Q-GL (AT)           | TBT           | N/A (no embedded eSIM) |
 
-AT provisioning needs these supported AT commands to interact with the eUICC:
+For ***Foxconn T99W175*** be sure to select the correct slot based on type of eSIM are you using (slot **0**=Physical SIM, slot **1**=eSIM)
+You can swap slot with `mbimcli` using this command:
+
+`mbimcli -p -d /dev/wwan0mbim0 --ms-set-device-slot-mappings=1`
+
+If you want to know which slot is active, just type:
+
+`mbimcli -p -d /dev/wwan0mbim0 --ms-query-device-slot-mappings`
+
+For AT provisioning, the modem meeds these commands to interact with the eUICC:
 
 - `AT+CCHO` to open logical channel
 - `AT+CCHC` to close logical channel 
 - `AT+CGLA` to use logical channel access
+
+Plese note if you use AT backend, this wrapper is not needed.
 
 # Bugs & know issues
 
