@@ -47,9 +47,18 @@ If you want to know which slot is active, just type:
 
 `mbimcli -p -d /dev/wwan0mbim0 --ms-query-device-slot-mappings`
 
-I've planned to test using a physical eSIM over MBIM, similar to [this](https://www.lenovo.com/it/it/p/accessories-and-software/mobile-broadband/4g-lte/4xc1l91362), in case your modem doesn't support eUICC AT commands.
+# Test List
 
-Just for reference, here are the required AT commands to interact with the eUICC:
+Here is a list of tests that I've done, both with embedded and [physical](https://www.lenovo.com/it/it/p/accessories-and-software/mobile-broadband/4g-lte/4xc1l91362) eSIM:
+
+| Modem Tested                     | Physical eSIM | Embedded eSIM |
+|----------------------------------|---------------|---------------|
+| Foxconn T99W175 (Lenovo)         | ✅ (w/MBIM)    | ✅ (w/MBIM)   |
+| Quectel RM502Q-GL (MBIM)         | TBT           | N/A (no embedded eSIM) |
+| Quectel RM502Q-GL (AT)           | TBT           | N/A (no embedded eSIM) |
+
+AT provisioning needs these supported AT commands to interact with the eUICC:
+
 - `AT+CCHO` to open logical channel
 - `AT+CCHC` to close logical channel 
 - `AT+CGLA` to use logical channel access
