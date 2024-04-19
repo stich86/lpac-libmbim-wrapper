@@ -38,7 +38,7 @@ INFO: Disconnect
 Exit code: 0
 ```
 
-All other commands are based on LPAC binary. 
+All other commands are based on [LPAC](https://github.com/estkme-group/lpac?tab=readme-ov-file#usage) binary. 
 Make sure to have access to the MBIM port, otherwise, run it as root.
 
 # Test Done
