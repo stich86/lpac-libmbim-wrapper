@@ -65,7 +65,7 @@ For AT provisioning, the modem needs these commands to interact with the eUICC:
 - `AT+CCHC` to close logical channel 
 - `AT+CGLA` to use logical channel access
 
-**T99W175** lacks AT commands, while Quectel seems to work only for these:
+**Foxconn T99W175** lacks AT commands, while **Quectel RM502Q-GL** seems to work only for these:
 - Chip Info
 - List Profile
 - Enable/Disable Profile
