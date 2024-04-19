@@ -9,13 +9,16 @@ from typing import Optional
 
 DEBUG = False
 
+# Point to MBIM port
+DEV = "/dev/wwan0mbim0"
+
 # apdu request doesn't provide us the channel_id again, so we need to persist it
 CHANNEL_ID: Optional[int] = None
 
 def run_mbimcli(command: str) -> str:
     try:
         command = command.replace('"', '')
-        output_bytes = subprocess.check_output(["mbimcli", "-p", "-d", "/dev/wwan0mbim0"] + command.split(),
+        output_bytes = subprocess.check_output(["mbimcli", "-p", "-d", DEV] + command.split(),
                                                 stderr=subprocess.STDOUT,
                                                 timeout=10)
         output_str = output_bytes.decode("utf-8")
