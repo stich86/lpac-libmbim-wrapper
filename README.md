@@ -1,5 +1,5 @@
 # lpac-libmbim-wrapper
-This is a wrapper for LPAC client to use `mbimcli` to manage **eUICC** on Linux client.
+This is a wrapper for LPAC client that use `mbimcli` to manage **eUICC** on Linux.
 
 # Acknowledgments
 I want to extend a big thanks to [@z3ntu](https://github.com/z3ntu/) for his original [work](https://github.com/z3ntu/lpac-libqmi-wrapper). I've just rewritten the parser to make it work with `mbimcli`.
@@ -65,27 +65,29 @@ For AT provisioning, the modem needs these commands to interact with the eUICC:
 - `AT+CCHC` to close logical channel 
 - `AT+CGLA` to use logical channel access
 
-**Foxconn T99W175** lacks AT commands, while **Quectel RM502Q-GL** seems to work only for these:
+***Foxconn T99W175*** lacks AT commands, while ***Quectel RM502Q-GL*** seems to work only for this subset:
 - Chip Info
 - List Profile
 - Enable/Disable Profile
 - Delete Profile
 - Notification List
 
-`Download Profile` and `Notification Process` are not working!
+`Download Profile`, `Notification Remove` and `Notification Process` didn't work on my attempts.
 
-Plese note if you use **AT** backend, this wrapper is not needed.
+⚠️ This wrapper is not needed if you want to use **APDU AT** backend. ⚠️
 
 # OpenWRT support
 
-You can use this wrapper also on OpenWRT but you need to:
+Wrapper can run also on OpenWRT, but you need to make some twea:
 
-- compile `libcurl` and `lpac` using OpenSSL and not MbedTLS. `lpac` package can be added to your custom build using this [fork](https://github.com/stich86/lpac-libmbim-wrapper)
+- compile `libcurl` and `lpac` using OpenSSL and not MbedTLS. `lpac` package can be added to your build using this [fork](https://github.com/stich86/lpac-libmbim-wrapper)
 - install Python packages `python3-light` and `python3-base`
+- copy `wrapper.py` into `/usr/bin` and make it executable `chmod +x wrapper.py`
 
 # Bugs & know issues
 
-Delete profile doesn't contact SM-DS server automatically, so it **doesn't detach** the eSIM profile. 
+⚠️ Delete profile doesn't contact SM-DP+ server automatically, so it **doesn't detach** the eSIM profile. ⚠️ 
+
 You should run these commands to release it: 
 
 Get all tasks issued on the eUICC:
