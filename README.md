@@ -90,7 +90,7 @@ You should run these commands to release it:
 
 Get all tasks issued on the eUICC:
 
-`./wrapper notification list`
+`./wrapper.py notification list`
 
 Output:
 
@@ -134,9 +134,9 @@ Output:
 
 Look at **profileManagementOperation** type `delete` and take not of `seqNumber` value, then issue the notification command to release the eSIM profile:
 
-`./wrapper notification process -r 5` <-- this will tell remote SM-DS server to release eSIM profile for ICCID `8939XXXXXXXXXXXXXXX`.
+`./wrapper.py notification process 5 -r` <-- this will tell remote SM-DS server to release eSIM profile for ICCID `8939XXXXXXXXXXXXXXX`.
 
-`./wrapper notification process -r 9` <-- this will tell remote SM-DS server to release eSIM profile for ICCID `8931XXXXXXXXXXXXXXX`.
+`./wrapper.py notification process 9 -r` <-- this will tell remote SM-DS server to release eSIM profile for ICCID `8931XXXXXXXXXXXXXXX`.
 
 # Others
 
