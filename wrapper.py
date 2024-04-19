@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+# SPDX-FileCopyrightText: 2024 Luca Weiss
+# SPDX-License-Identifier: MIT
 
 import os
 import json
@@ -101,7 +103,7 @@ def main():
         DEBUG = 1
 
     env = os.environ.copy()
-    env["APDU_INTERFACE"] = "libapduinterface_stdio.so"
+    env["APDU_INTERFACE"] = "libapduinterface_stdio.so" 
     env["LPAC_APDU"] = "stdio"
 
     cmd = ['lpac'] + sys.argv[1:]
