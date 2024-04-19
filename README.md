@@ -78,7 +78,7 @@ For AT provisioning, the modem needs these commands to interact with the eUICC:
 
 # OpenWRT support
 
-Wrapper can run also on OpenWRT, but you need to make some twea:
+Wrapper can run also on OpenWRT, but you need to make some change:
 
 - compile `libcurl` and `lpac` using OpenSSL and not MbedTLS. `lpac` package can be added to your build using this [fork](https://github.com/stich86/lpac-libmbim-wrapper)
 - install Python packages `python3-light` and `python3-base`
@@ -139,6 +139,8 @@ Look at **profileManagementOperation** type `delete` and take not of `seqNumber`
 `./wrapper.py notification process 5 -r` <-- this will tell remote SM-DS server to release eSIM profile for ICCID `8939XXXXXXXXXXXXXXX`.
 
 `./wrapper.py notification process 9 -r` <-- this will tell remote SM-DS server to release eSIM profile for ICCID `8931XXXXXXXXXXXXXXX`.
+
+The flag `-r` will remove the task from the list.
 
 # Others
 
