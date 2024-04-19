@@ -76,6 +76,13 @@ For AT provisioning, the modem needs these commands to interact with the eUICC:
 
 Plese note if you use **AT** backend, this wrapper is not needed.
 
+# OpenWRT support
+
+You can use this wrapper also on OpenWRT but you need to:
+
+- compile `libcurl` and `lpac` using OpenSSL and not MbedTLS. `lpac` package can be added to your custom build using this [fork](https://github.com/stich86/lpac-libmbim-wrapper)
+- install Python packages `python3-light` and `python3-base`
+
 # Bugs & know issues
 
 Delete profile doesn't contact SM-DS server automatically, so it **doesn't detach** the eSIM profile. 
