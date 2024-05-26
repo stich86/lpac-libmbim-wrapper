@@ -6,6 +6,7 @@ I want to extend a big thanks to [@z3ntu](https://github.com/z3ntu/) for his ori
 
 # How to use
 - Install or compile LPAC client, please refer to this [link](https://github.com/estkme-group/lpac) for instructions
+- Make sure you have `mbimcli` installed. On Ubuntu this can be achieved by running `sudo apt update` followed by `sudo apt install libmbim-utils`.
 - Download `wrapper.py`, edit it to point the right device using the variable `DEV` and make it executable (`chmod +x wrapper.py`)
 - Use `./wrapper.py command`
 
