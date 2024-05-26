@@ -76,8 +76,8 @@ def handle_type_apdu(func: str, param: str):
 
     if func == "logic_channel_close":
         try:
-            print(f"INFO: Close channel {param}")
-            close_channel(int(param))
+            print(f"INFO: Close channel {CHANNEL_ID}")
+            close_channel(int(CHANNEL_ID))
             return {"ecode": 0}
         except subprocess.CalledProcessError as e:
             print(e)
