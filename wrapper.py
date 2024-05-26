@@ -13,6 +13,7 @@ DEBUG = False
 
 # Point to MBIM port
 DEV = "/dev/wwan0mbim0"
+#DEV = "/dev/cdc-wdm1"
 
 # apdu request doesn't provide us the channel_id again, so we need to persist it
 CHANNEL_ID: Optional[int] = None
