@@ -45,10 +45,48 @@ Make sure to have access to the MBIM port, otherwise, run it as root.
 
 Here is a list of tests that I've done, both with embedded and [physical](https://www.lenovo.com/it/it/p/accessories-and-software/mobile-broadband/4g-lte/4xc1l91362) eSIM:
 
-| Modem Tested                     | AT | MBIM |
-|----------------------------------|----|------|
-| Foxconn T99W175 (Lenovo version) | ❌  | ✅    |
-| Quectel RM502Q-GL                | ⚠️  | ✅    |
+<table>
+  <thead>
+    <tr>
+      <th rowspan=2>Modem Tested</th>
+      <th colspan=2>e-SIM</th>
+      <th colspan=3>APDU backend</th>
+    </tr>
+    <tr>
+      <th>Internal</th>
+      <th>External</th>
+      <th>AT</th>
+      <th>MBIM</th>
+      <th>QMI</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Foxconn T99W175 (Lenovo version)</td>
+      <td align="center">✅</td>
+      <td align="center">✅</td>
+      <td align="center">❌</td>
+      <td align="center">✅</td>
+      <td align="center">❌</td>
+    </tr>
+    <tr>
+      <td>Quectel RM502Q-GL</td>
+      <td align="center">N/A</td>
+      <td align="center">✅</td>
+      <td align="center">⚠️</td>
+      <td align="center">✅</td>
+      <td align="center">❔</td>
+    </tr>
+    <tr>
+      <td>Quectel EP06-E</td>
+      <td align="center">N/A</td>
+      <td align="center">❔</td>
+      <td align="center">❔</td>
+      <td align="center">❔</td>
+      <td align="center">❔</td>
+    </tr>
+  </tbody>
+</table>
 
 When using ***Foxconn T99W175*** select the correct slot based on type of eSIM you are using (slot **0**=Physical SIM, slot **1**=Embedded eSIM)
 You can swap slot with `mbimcli` using this command:
