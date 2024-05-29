@@ -13,11 +13,11 @@ DEBUG = False
 
 
 # read the device path from the command line
-DeviceParameter=sys.argv[1]
-if DeviceParameter.startswith('--device='):
-    DEV=DeviceParameter.split('--device=')[1]
+if len(sys.argv)>1 and sys.argv[1].startswith('--device='):
+    DEV=sys.argv[1].split('--device=')[1]
 else:
-    raise Exception('device not defined, the first parameter should be something like --device=/dev/wwan0mbim0 or --device=/dev/cdc-wdm1')
+    print('device not defined, the first command line parameter passed should be something like --device=/dev/wwan0mbim0 or --device=/dev/cdc-wdm1')
+    sys.exit()
 
 
 
