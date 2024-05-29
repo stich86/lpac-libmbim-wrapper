@@ -22,7 +22,7 @@ pip3 install git+https://github.com/stich86/lpac-libmbim-wrapper.git
 
 To display a list of installed profiles, simply type:
 
-`lpac-mbim --device=/dev//dev/wwan0mbim0 profile list`
+`lpac-mbim --device=/dev/wwan0mbim0 profile list`
 
 Output:
 
@@ -101,7 +101,7 @@ You should run these commands to release it:
 
 Get all tasks issued on the eUICC:
 
-`lpac-mbim --device=/dev//dev/wwan0mbim0 notification list`
+`lpac-mbim --device=/dev/wwan0mbim0 notification list`
 
 Output:
 
@@ -145,9 +145,9 @@ Output:
 
 Look at **profileManagementOperation** type `delete` and take not of `seqNumber` value, then issue the notification command to release the eSIM profile:
 
-`lpac-mbim --device=/dev//dev/wwan0mbim0 notification process 5 -r` <-- this will tell remote SM-DS server to release eSIM profile for ICCID `8939XXXXXXXXXXXXXXX`.
+`lpac-mbim --device=/dev/wwan0mbim0 notification process 5 -r` <-- this will tell remote SM-DS server to release eSIM profile for ICCID `8939XXXXXXXXXXXXXXX`.
 
-`lpac-mbim --device=/dev//dev/wwan0mbim0 notification process 9 -r` <-- this will tell remote SM-DS server to release eSIM profile for ICCID `8931XXXXXXXXXXXXXXX`.
+`lpac-mbim --device=/dev/wwan0mbim0 notification process 9 -r` <-- this will tell remote SM-DS server to release eSIM profile for ICCID `8931XXXXXXXXXXXXXXX`.
 
 The flag `-r` will remove the task from the list.
 
