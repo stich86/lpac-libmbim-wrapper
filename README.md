@@ -1,20 +1,28 @@
 # lpac-libmbim-wrapper
-This is a wrapper for LPAC client that use `mbimcli` to manage **eUICC** on Linux.
+This is a wrapper for the LPAC client that uses `mbimcli` to manage **eUICC (eSIM)** on Linux.
 
 # Acknowledgments
 I want to extend a big thanks to [@z3ntu](https://github.com/z3ntu/) for his original [work](https://github.com/z3ntu/lpac-libqmi-wrapper). I've just rewritten the parser to make it work with `mbimcli`.
 
 # How to use
-- Install or compile LPAC client, please refer to this [link](https://github.com/estkme-group/lpac) for instructions
-- Make sure you have `mbimcli` installed. On Ubuntu this can be achieved by running `sudo apt update` followed by `sudo apt install libmbim-utils`.
-- Download `wrapper.py`, edit it to point the right device using the variable `DEV` and make it executable (`chmod +x wrapper.py`)
-- Use `./wrapper.py command`
+- Install [LPAC](https://github.com/estkme-group/lpac).
+- Insall dependencies:
+```bash
+sudo apt update
+sudo apt install python3-pip libmbim-utils
+```
+- Install lpac-libmbim-wrapper:
+```bash
+pip3 install git+https://github.com/stich86/lpac-libmbim-wrapper.git
+```
+- Make sure `$HOME/.local/bin` is part of your `PATH` variable. If not, add `export PATH="$HOME/.local/bin:$PATH"` to `$HOME/.bashrc`, then open up a new terminal.
+- Use `lpac-mbim --device=/dev/MBIMdevice {lpac commands}`
 
 ## Some examples:
 
 To display a list of installed profiles, simply type:
 
-`./wrapper.py profile list`
+`lpac-mbim --device=/dev//dev/wwan0mbim0 profile list`
 
 Output:
 
@@ -93,7 +101,7 @@ You should run these commands to release it:
 
 Get all tasks issued on the eUICC:
 
-`./wrapper.py notification list`
+`lpac-mbim --device=/dev//dev/wwan0mbim0 notification list`
 
 Output:
 
@@ -137,9 +145,9 @@ Output:
 
 Look at **profileManagementOperation** type `delete` and take not of `seqNumber` value, then issue the notification command to release the eSIM profile:
 
-`./wrapper.py notification process 5 -r` <-- this will tell remote SM-DS server to release eSIM profile for ICCID `8939XXXXXXXXXXXXXXX`.
+`lpac-mbim --device=/dev//dev/wwan0mbim0 notification process 5 -r` <-- this will tell remote SM-DS server to release eSIM profile for ICCID `8939XXXXXXXXXXXXXXX`.
 
-`./wrapper.py notification process 9 -r` <-- this will tell remote SM-DS server to release eSIM profile for ICCID `8931XXXXXXXXXXXXXXX`.
+`lpac-mbim --device=/dev//dev/wwan0mbim0 notification process 9 -r` <-- this will tell remote SM-DS server to release eSIM profile for ICCID `8931XXXXXXXXXXXXXXX`.
 
 The flag `-r` will remove the task from the list.
 

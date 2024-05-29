@@ -11,9 +11,15 @@ from typing import Optional
 
 DEBUG = False
 
-# Point to MBIM port
-DEV = "/dev/wwan0mbim0"
-#DEV = "/dev/cdc-wdm1"
+
+# read the device path from the command line
+DeviceParameter=sys.argv[1]
+if DeviceParameter.startswith('--device='):
+    DEV=DeviceParameter.split('--device=')[1]
+else:
+    raise Exception('device not defined, the first parameter should be something like --device=/dev/wwan0mbim0 or --device=/dev/cdc-wdm1')
+
+
 
 # apdu request doesn't provide us the channel_id again, so we need to persist it
 CHANNEL_ID: Optional[int] = None
@@ -107,7 +113,7 @@ def main():
     env["APDU_INTERFACE"] = "libapduinterface_stdio.so" 
     env["LPAC_APDU"] = "stdio"
 
-    cmd = ['lpac'] + sys.argv[1:]
+    cmd = ['lpac'] + sys.argv[2:]
     with subprocess.Popen(cmd,
                           stdout=subprocess.PIPE,
                           stdin=subprocess.PIPE,
