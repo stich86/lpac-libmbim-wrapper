@@ -6,7 +6,7 @@ I want to extend a big thanks to [@z3ntu](https://github.com/z3ntu/) for his ori
 
 # How to use
 - Install [LPAC](https://github.com/estkme-group/lpac).
-- Insall dependencies:
+- Install dependencies:
 ```bash
 sudo apt update
 sudo apt install python3-pip libmbim-utils
