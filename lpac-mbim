@@ -11,8 +11,15 @@ from typing import Optional
 
 DEBUG = False
 
-# Point to MBIM port
-DEV = "/dev/wwan0mbim0"
+
+# read the device path from the command line
+if len(sys.argv)>1 and sys.argv[1].startswith('--device='):
+    DEV=sys.argv[1].split('--device=')[1]
+else:
+    print('device not defined, the first command line parameter passed should be something like --device=/dev/wwan0mbim0 or --device=/dev/cdc-wdm1')
+    sys.exit()
+
+
 
 # apdu request doesn't provide us the channel_id again, so we need to persist it
 CHANNEL_ID: Optional[int] = None
@@ -76,8 +83,8 @@ def handle_type_apdu(func: str, param: str):
 
     if func == "logic_channel_close":
         try:
-            print(f"INFO: Close channel {param}")
-            close_channel(int(param))
+            print(f"INFO: Close channel {CHANNEL_ID}")
+            close_channel(int(CHANNEL_ID))
             return {"ecode": 0}
         except subprocess.CalledProcessError as e:
             print(e)
@@ -106,7 +113,7 @@ def main():
     env["APDU_INTERFACE"] = "libapduinterface_stdio.so" 
     env["LPAC_APDU"] = "stdio"
 
-    cmd = ['lpac'] + sys.argv[1:]
+    cmd = ['lpac'] + sys.argv[2:]
     with subprocess.Popen(cmd,
                           stdout=subprocess.PIPE,
                           stdin=subprocess.PIPE,

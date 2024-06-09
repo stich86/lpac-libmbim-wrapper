@@ -1,19 +1,27 @@
 # lpac-libmbim-wrapper
-This is a wrapper for LPAC client that use `mbimcli` to manage **eUICC** on Linux.
+This is a wrapper for the LPAC client that uses `mbimcli` to manage **eUICC (eSIM)** on Linux.
 
 # Acknowledgments
 I want to extend a big thanks to [@z3ntu](https://github.com/z3ntu/) for his original [work](https://github.com/z3ntu/lpac-libqmi-wrapper). I've just rewritten the parser to make it work with `mbimcli`.
 
 # How to use
-- Install or compile LPAC client, please refer to this [link](https://github.com/estkme-group/lpac) for instructions
-- Download `wrapper.py`, edit it to point the right device using the variable `DEV` and make it executable (`chmod +x wrapper.py`)
-- Use `./wrapper.py command`
+- Install [LPAC](https://github.com/estkme-group/lpac).
+- Install dependencies:
+```bash
+sudo apt update
+sudo apt install python3-pip libmbim-utils
+```
+- Install lpac-libmbim-wrapper:
+```bash
+sudo pip3 install git+https://github.com/stich86/lpac-libmbim-wrapper.git
+```
+- Use `sudo lpac-mbim --device=/dev/MBIMdevice {lpac commands}`.
 
 ## Some examples:
 
 To display a list of installed profiles, simply type:
 
-`./wrapper.py profile list`
+`sudo lpac-mbim --device=/dev/wwan0mbim0 profile list`
 
 Output:
 
@@ -39,7 +47,6 @@ Exit code: 0
 ```
 
 All other commands are based on [LPAC](https://github.com/estkme-group/lpac?tab=readme-ov-file#usage) binary. 
-Make sure to have access to the MBIM port, otherwise, run it as root.
 
 # Test Done
 
@@ -91,11 +98,11 @@ Here is a list of tests that I've done, both with embedded and [physical](https:
 When using ***Foxconn T99W175*** select the correct slot based on type of eSIM you are using (slot **0**=Physical SIM, slot **1**=Embedded eSIM)
 You can swap slot with `mbimcli` using this command:
 
-`mbimcli -p -d /dev/wwan0mbim0 --ms-set-device-slot-mappings=1`
+`sudo mbimcli -p -d /dev/wwan0mbim0 --ms-set-device-slot-mappings=1`
 
 If you want to know which slot is active, just type:
 
-`mbimcli -p -d /dev/wwan0mbim0 --ms-query-device-slot-mappings`
+`sudo mbimcli -p -d /dev/wwan0mbim0 --ms-query-device-slot-mappings`
 
 For AT provisioning, the modem needs these commands to interact with the eUICC:
 
@@ -130,7 +137,7 @@ You should run these commands to release it:
 
 Get all tasks issued on the eUICC:
 
-`./wrapper.py notification list`
+`sudo lpac-mbim --device=/dev/wwan0mbim0 notification list`
 
 Output:
 
@@ -174,9 +181,9 @@ Output:
 
 Look at **profileManagementOperation** type `delete` and take not of `seqNumber` value, then issue the notification command to release the eSIM profile:
 
-`./wrapper.py notification process 5 -r` <-- this will tell remote SM-DS server to release eSIM profile for ICCID `8939XXXXXXXXXXXXXXX`.
+`sudo lpac-mbim --device=/dev/wwan0mbim0 notification process 5 -r` <-- this will tell remote SM-DS server to release eSIM profile for ICCID `8939XXXXXXXXXXXXXXX`.
 
-`./wrapper.py notification process 9 -r` <-- this will tell remote SM-DS server to release eSIM profile for ICCID `8931XXXXXXXXXXXXXXX`.
+`sudo lpac-mbim --device=/dev/wwan0mbim0 notification process 9 -r` <-- this will tell remote SM-DS server to release eSIM profile for ICCID `8931XXXXXXXXXXXXXXX`.
 
 The flag `-r` will remove the task from the list.
 
