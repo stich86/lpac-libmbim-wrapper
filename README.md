@@ -92,6 +92,14 @@ Here is a list of tests that I've done, both with embedded and [physical](https:
       <td align="center">✅</td>
       <td align="center">❔</td>
     </tr>
+    <tr>
+      <td>APAL MiFi 5G Router (90D5 USB Composition)</td>
+      <td align="center">N/A</td>
+      <td align="center">✅</td>
+      <td align="center">❌</td>
+      <td align="center">✅</td>
+      <td align="center">N/A</td>
+    </tr>    
   </tbody>
 </table>
 
@@ -110,7 +118,7 @@ For AT provisioning, the modem needs these commands to interact with the eUICC:
 - `AT+CCHC` to close logical channel 
 - `AT+CGLA` to use logical channel access
 
-***Foxconn T99W175*** lacks AT commands, while ***Quectel RM502Q-GL*** seems to work only for this subset:
+***Foxconn T99W175*** lacks AT commands, while ***Quectel RM502Q-GL/EP06-E*** seems to work only for this subset:
 - Chip Info
 - List Profile
 - Enable/Disable Profile
