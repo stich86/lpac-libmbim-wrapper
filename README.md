@@ -65,6 +65,7 @@ Here is a list of tests that I've done, both with embedded and [physical](https:
       <th>AT</th>
       <th>MBIM</th>
       <th>QMI</th>
+      <th>Firmware</th>
     </tr>
   </thead>
   <tbody>
@@ -75,6 +76,7 @@ Here is a list of tests that I've done, both with embedded and [physical](https:
       <td align="center">❌</td>
       <td align="center">✅</td>
       <td align="center">❌</td>
+      <td align="center">F0.1.0.0.9.VF.008</td>
     </tr>
     <tr>
       <td>Quectel RM502Q-GL</td>
@@ -83,6 +85,7 @@ Here is a list of tests that I've done, both with embedded and [physical](https:
       <td align="center">⚠️</td>
       <td align="center">✅</td>
       <td align="center">❔</td>
+      <td align="center">RM502QGLAAR11A02M4G</td>
     </tr>
     <tr>
       <td>Quectel EP06-E</td>
@@ -91,6 +94,7 @@ Here is a list of tests that I've done, both with embedded and [physical](https:
       <td align="center">⚠️</td>
       <td align="center">✅</td>
       <td align="center">❔</td>
+      <td align="center">EP06ELAR04A05M4G</td>
     </tr>
     <tr>
       <td>APAL MiFi 5G Router (90D5 USB Composition)</td>
@@ -99,6 +103,7 @@ Here is a list of tests that I've done, both with embedded and [physical](https:
       <td align="center">❌</td>
       <td align="center">✅</td>
       <td align="center">N/A</td>
+      <td align="center">AXDG1.20.00_181_0R00</td>     
     </tr>    
   </tbody>
 </table>
