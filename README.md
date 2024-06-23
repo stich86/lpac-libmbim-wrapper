@@ -58,6 +58,7 @@ Here is a list of tests that I've done, both with embedded and [physical](https:
       <th rowspan=2>Modem Tested</th>
       <th colspan=2>e-SIM</th>
       <th colspan=3>APDU backend</th>
+      <th colspan=3>Firmware</th>
     </tr>
     <tr>
       <th>Internal</th>
@@ -65,7 +66,7 @@ Here is a list of tests that I've done, both with embedded and [physical](https:
       <th>AT</th>
       <th>MBIM</th>
       <th>QMI</th>
-      <th>Firmware</th>
+      <th>ATI Output</th>
     </tr>
   </thead>
   <tbody>
