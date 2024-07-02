@@ -193,7 +193,7 @@ Output:
  'type': 'lpa'}
 ```
 
-Look at **profileManagementOperation** type `delete` and take not of `seqNumber` value, then issue the notification command to release the eSIM profile:
+Look at **profileManagementOperation** type `delete` and take note of `seqNumber` value, then issue the notification command to release the eSIM profile:
 
 `sudo lpac-mbim --device=/dev/wwan0mbim0 notification process 5 -r` <-- this will tell remote SM-DS server to release eSIM profile for ICCID `8939XXXXXXXXXXXXXXX`.
 
