@@ -48,7 +48,7 @@ def send_apdu(apdu: str) -> str:
         return f'{status_hex}'
 
 def open_channel(aid: str) -> str:
-    output_cmd = run_mbimcli(f'--ms-set-uicc-open-channel="application-id={aid}"').split('\n')
+    output_cmd = run_mbimcli(f'--ms-set-uicc-open-channel="application-id={aid}",channel-group=1').split('\n')
     channel_line = next(line for line in output_cmd if line.startswith('\t channel:'))
     channel_id_str = channel_line.split(': ')[1].strip()
     channel_id = int(channel_id_str)
