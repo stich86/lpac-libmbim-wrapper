@@ -141,7 +141,7 @@ Wrapper can run also on OpenWRT, but you need to make some change:
 
 - compile `libcurl` and `lpac` using OpenSSL and not MbedTLS. `lpac` package can be added to your build using this [fork](https://github.com/stich86/lpac-libmbim-wrapper)
 - install Python packages `python3-light` and `python3-base`
-- copy `wrapper.py` into `/usr/bin` and make it executable `chmod +x wrapper.py`
+- copy `lpac-mbim` into `/usr/bin` and make it executable `chmod +x lpac-mbim`
 
 # Bugs & know issues
 
