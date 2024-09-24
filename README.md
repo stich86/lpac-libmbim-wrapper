@@ -92,7 +92,7 @@ Here is a list of tests that I've done, both with embedded and [physical](https:
       <td>Quectel EP06-E</td>
       <td align="center">N/A</td>
       <td align="center">✅</td>
-      <td align="center">⚠️</td>
+      <td align="center">N/A</td>
       <td align="center">✅</td>
       <td align="center">❔</td>
       <td align="center">EP06ELAR04A05M4G</td>
