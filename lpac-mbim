@@ -15,9 +15,12 @@ DEBUG = False
 # read the device path from the command line
 if len(sys.argv)>1 and sys.argv[1].startswith('--device='):
     DEV=sys.argv[1].split('--device=')[1]
+    sys.argv.pop(1)
 else:
-    print('device not defined, the first command line parameter passed should be something like --device=/dev/wwan0mbim0 or --device=/dev/cdc-wdm1')
-    sys.exit()
+    DEV = "/dev/wwan0mbim0"
+    if not(os.path.exists(DEV)):
+        print('device',DEV,'is not found, pass it in the first command line parameter like --device=/dev/wwan0mbim1 or --device=/dev/cdc-wdm1')
+        sys.exit()
 
 
 
@@ -113,7 +116,7 @@ def main():
     env["APDU_INTERFACE"] = "libapduinterface_stdio.so" 
     env["LPAC_APDU"] = "stdio"
 
-    cmd = ['lpac'] + sys.argv[2:]
+    cmd = ['lpac'] + sys.argv[1:]
     with subprocess.Popen(cmd,
                           stdout=subprocess.PIPE,
                           stdin=subprocess.PIPE,
