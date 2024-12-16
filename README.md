@@ -1,3 +1,5 @@
+<h1>!!IMPORTANT!! The MBIM backend was added to the latest LPAC update, this wrapper is not needed anymore</h1>
+
 # lpac-libmbim-wrapper
 This is a wrapper for the LPAC client that uses `mbimcli` to manage **eUICC (eSIM)** on Linux.
 
